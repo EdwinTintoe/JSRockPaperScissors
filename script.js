@@ -1,16 +1,52 @@
 function getComputerChoice() {
     const rand = Math.floor(Math.random() * 3);
-    let computerChoice;
+    let select;
     switch (rand) {
         case 0:
-            computerChoice = "rock"
+            select = "rock"
             break;
         case 1:
-            computerChoice = "paper"
+            select = "paper"
             break;
         case 2:
-            computerChoice = "scissors" 
+            select = "scissors" 
     }
-    return computerChoice;
+    return select;
 }
-console.log(getComputerChoice());
+
+function getHumanChoice(){
+    const userInput = prompt("Choose rock, paper or scissors", "rock").toLowerCase();
+    if (userInput === "rock" || userInput === "paper" || userInput ==="scissors"){
+        return userInput
+    }
+    
+    else{
+        alert("must choose rock, paper or scissors.")
+    }
+}
+
+let humanScore = 0;
+let computerScore = 0;
+
+
+function playRound(humanChoice, computerChoice){
+    
+    if (
+        humanChoice === "rock" && computerChoice === "scissors"     ||
+        humanChoice === "scissors" && computerChoice === "paper"    ||
+        humanChoice === "paper" && computerChoice === "rock"
+    ) {
+        humanScore++
+        console.log(`${humanChoice} beats ${computerChoice}, you win! The score is ${humanScore}:${computerScore}.`)
+    }
+    else if(humanChoice === computerChoice) {
+        console.log(`It's a tie ! The score is ${humanScore}:${computerScore}.`)
+    }
+    else{
+        computerScore++
+        console.log(`${computerChoice} beats ${humanChoice}, you win! The score is ${humanScore}:${computerScore}.`)
+    }
+}
+const humanSelection = getHumanChoice();
+const computerSelection = getComputerChoice();
+playRound(humanSelection, computerSelection);
