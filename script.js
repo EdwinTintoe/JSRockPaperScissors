@@ -1,3 +1,11 @@
+const options = document.querySelector(".options");
+const choice = document.querySelector("#result");
+const score = document.querySelector("#score");
+const result = document.querySelector("#announcement")
+
+let humanScore = 0;
+let computerScore = 0;
+
 function getComputerChoice() {
     const rand = Math.floor(Math.random() * 3);
     let select;
@@ -14,46 +22,43 @@ function getComputerChoice() {
     return select;
 }
 
-function getHumanChoice(){
-    const userInput = prompt("Choose rock, paper or scissors").toLowerCase();
-    if (userInput === "rock" || userInput === "paper" || userInput ==="scissors"){
-        return userInput
-    }
-    
-    else{
-        alert("must choose rock, paper or scissors.")
-    }
-}
-
-let humanScore = 0;
-let computerScore = 0;
-
-
-function playRound(humanChoice, computerChoice){
-    
+function playRound(humanChoice, computerChoice){    
     if (
         humanChoice === "rock" && computerChoice === "scissors"     ||
         humanChoice === "scissors" && computerChoice === "paper"    ||
         humanChoice === "paper" && computerChoice === "rock"
     ) {
         humanScore++
-        console.log(`${humanChoice} beats ${computerChoice}, you win! The score is ${humanScore}:${computerScore}.`)
+        choice.textContent = `Your choice: ${humanChoice}. Computer's choice: ${computerChoice}.`
+        result.textContent = `You win!`
+        score.textContent = `The score is ${humanScore}:${computerScore}.`;
     }
     else if(humanChoice === computerChoice) {
-        console.log(`It's a tie ! The score is ${humanScore}:${computerScore}.`)
+        choice.textContent = `Your choice: ${humanChoice}. Computer's choice: ${computerChoice}.`
+        result.textContent = `It's a tie`
+        score.textContent = `The score is ${humanScore}:${computerScore}.`;
     }
     else{
         computerScore++
-        console.log(`${computerChoice} beats ${humanChoice}, you loose! The score is ${humanScore}:${computerScore}.`)
+        choice.textContent = `Your choice: ${humanChoice}. Computer's choice: ${computerChoice}.`
+        result.textContent = `You loose.`
+        score.textContent = `The score is ${humanScore}:${computerScore}.`;
     }
 }
 
-function playGame(times){
-    for (let i = 0; i < times; i++){
-        
-        let humanSelection = getHumanChoice();
-        let computerSelection = getComputerChoice();
-        playRound(humanSelection, computerSelection);
+options.addEventListener('click', (event) => {
+    let target = event.target;
+    switch(target.id){
+        case "rock":
+            humanSelection = "rock";
+            break;
+        case "paper":
+            humanSelection = "paper";
+            break;
+        case "scissors":
+            humanSelection = "scissors";
+            break;
     }
-}
-playGame(5);
+    const computerSelection = getComputerChoice();
+    playRound(humanSelection, computerSelection);
+})
